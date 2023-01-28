@@ -1,11 +1,10 @@
-const input = area(process.argv.slice(2))
+const user_input = process.argv.slice(2);
 
 const area = (radius) => {
     return 3.14*(radius*radius);
 }
 
-if (isNaN(input)){
-    console.log(area(input));
+const output = area(user_input[0]);
+if (!isNaN(output) && output < 9999){
+    console.log(output);
 }
-
-
