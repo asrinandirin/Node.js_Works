@@ -1,16 +1,30 @@
 const express = require('express');
+const path = require('path');
+const ejs = require('ejs');
 
 const app = express();
 
-app.get("/", (req,res) => {
-    const photo = {
-      id: 1,
-      name: "Photo Name",
-      description: "Photo Description"
-    }
-    res.send(photo);
-    
-})
+// TEMPLATE ENGINE
+
+app.set('view engine', 'ejs');
+
+// MIDLEWARE
+
+app.use(express.static('public')); // uses public as static file folder.
+
+//ROUTES
+
+app.get('/', (req, res) => {
+  res.render("index");
+});
+
+app.get('/about', (req, res) => {
+  res.render("about");
+});
+
+app.get('/add', (req, res) => {
+  res.render("add");
+});
 
 const port = 3000;
 app.listen(port, () => {
