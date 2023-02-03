@@ -1,8 +1,19 @@
 const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
+const Photo = require('./models/Photo');
+const mongoose = require('mongoose');
 
 const app = express();
+const port = 3000;
+mongoose.set('strictQuery', false);
+
+//CONNECT DB
+
+mongoose.connect('mongodb://127.0.0.1:27017/pcat-test-db', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // TEMPLATE ENGINE
 
@@ -11,22 +22,42 @@ app.set('view engine', 'ejs');
 // MIDLEWARE
 
 app.use(express.static('public')); // uses public as static file folder.
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //ROUTES
 
-app.get('/', (req, res) => {
-  res.render("index");
-});
+app.get('/', async (req, res) => {
+  const photos = await Photo.find({})
+  res.render('index', {
+    photos
+  });
+})
+
+app.get('/index', async (req, res) => {
+  const photos = await Photo.find({})
+  res.render('index', {
+    photos
+  });
+})
 
 app.get('/about', (req, res) => {
-  res.render("about");
+  res.render('about');
 });
 
 app.get('/add', (req, res) => {
-  res.render("add");
+  res.render('add');
 });
 
-const port = 3000;
 app.listen(port, () => {
   console.log('Server started...');
 });
+
+// POST METHOD
+
+app.post('/photos', async (req, res) => { // async - await yapısı kullanacğız.
+  await Photo.create(req.body)            // body bilgisini Photo modeli sayesinde veritabanında dökümana dönüştürüyoruz.
+  res.redirect('/')
+});
+
+
