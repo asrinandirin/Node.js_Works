@@ -6,11 +6,10 @@ const mongoose = require('mongoose');
 
 const app = express();
 const port = 3000;
-mongoose.set('strictQuery', false);
 
 //CONNECT DB
-
-mongoose.connect('mongodb://127.0.0.1:27017/pcat-test-db', {
+mongoose.set('strictQuery', false);
+mongoose.connect('mongodb://127.0.0.1:27017/cleanblog-test-db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
