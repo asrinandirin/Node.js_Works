@@ -39,9 +39,11 @@ app.get('/', async (req, res) => {
       posts
     })});
 
-app.get('/index', (req, res) => {
-    res.render('index')
-})
+app.get('/index', async (req, res) => {
+    const posts = await Post.find({})
+    res.render('index', {
+        posts
+    })});
 
 app.get('/about', (req, res) => {
     res.render('about')
@@ -50,6 +52,24 @@ app.get('/about', (req, res) => {
 app.get('/add_post', (req, res) => {
     res.render('add_post')
 })
+/*
+app.get("/post/:id", async (req,res) => {
+    const post = await Post.findById(req.params.id);
+    console.log(req.params.id);
+    console.log(req.body)
+    res.render("post", {
+        post
+    })
+})
+*/
+app.get('/post/:id', async (req, res) => {
+    console.log(req.params.id)
+    const post = await Post.findById(req.params.id)
+    console.log(req.body)
+    res.render("post", {
+      post
+    })
+  });
 
 app.post('/post', async (req, res) => {
     console.log(req.body)
@@ -61,3 +81,5 @@ app.post('/post', async (req, res) => {
 app.listen(port, () => {
     console.log('Server started...')
 })
+
+

@@ -9,7 +9,7 @@ const port = 3000;
 
 //CONNECT DB
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://127.0.0.1:27017/cleanblog-test-db', {
+mongoose.connect('mongodb://127.0.0.1:27017/pcat-test-db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -39,6 +39,15 @@ app.get('/index', async (req, res) => {
     photos
   });
 })
+
+app.get('/photos/:id', async (req, res) => {
+  console.log(req.params.id)
+  const photo = await Photo.findById(req.params.id)
+  console.log(req.body)
+  res.render("photo", {
+    photo
+  })
+});
 
 app.get('/about', (req, res) => {
   res.render('about');
