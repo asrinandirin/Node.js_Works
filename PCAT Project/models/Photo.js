@@ -10,7 +10,7 @@ const PhotoSchema = new Schema({
   dateCreated: {
     type: Date,
     default: Date.now,
-  },
+  },  
 });
 
 const Photo = mongoose.model('Photo', PhotoSchema);

@@ -24,13 +24,26 @@
 		<div class="container-fluid">
 			<div class="mx-auto tm-content-container">
 				<main>
-					<div class="row mb-5 pb-5">
+					<div class="row mb-5 pb-4">
+						<div class="col-12">
+							<img src="<%= photo.image %>" alt="Image" class="img-fluid">
+						</div>
 						<div class="col-xl-8 col-lg-7">
 							<!-- Video description -->
 							<div class="tm-video-description-box">
 								<h2 class="mb-5 tm-video-title"><%= photo.title %></h2>
 								<p class="mb-4"> <%= photo.description %> </p>
 							</div>							
+						</div>
+						<div class="col-xl-4 col-lg-5">
+							<div class="tm-bg-gray tm-share-box">
+								<div>
+									<a href="/photo/edit/<%= photo._id %>" class="btn btn-primary p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Edit Video</span></a>	
+								</div>
+								<div>
+									<a href="/photo/delete/<%= photo._id %>" class="btn btn-danger p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Delete Video</span></a>	
+								</div>
+							</div>
 						</div>
 					</div>
 

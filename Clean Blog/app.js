@@ -4,6 +4,8 @@ const express = require('express')
 const ejs = require('ejs')
 const path = require('path')
 const Post = require('./models/Post')
+const pageController = require('./controller/pageController')
+const postController = require('./controller/postController')
 
 // APP CONFIGURATIONS
 const app = express()
@@ -11,11 +13,11 @@ app.set('view engine', 'ejs')
 const port = 3000
 
 //CONNECT DB
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', false)
 mongoose.connect('mongodb://127.0.0.1:27017/cleanblog-test-db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
 
 // MIDDLEWARE
 app.use(express.static('public')) // uses public as static file folder.
@@ -24,62 +26,21 @@ app.use(
         extended: true,
     })
 )
+
 app.use(express.json())
 
 //ROUTES
-/*
-app.get('/', (req, res) => {
-    res.render('index')
-})
-*/
 
-app.get('/', async (req, res) => {
-    const posts = await Post.find({})
-    res.render('index', {
-      posts
-    })});
+app.get('/about', pageController.getAboutPage)
+app.get('/add_post', pageController.getAddPage)
 
-app.get('/index', async (req, res) => {
-    const posts = await Post.find({})
-    res.render('index', {
-        posts
-    })});
-
-app.get('/about', (req, res) => {
-    res.render('about')
-})
-
-app.get('/add_post', (req, res) => {
-    res.render('add_post')
-})
-/*
-app.get("/post/:id", async (req,res) => {
-    const post = await Post.findById(req.params.id);
-    console.log(req.params.id);
-    console.log(req.body)
-    res.render("post", {
-        post
-    })
-})
-*/
-app.get('/post/:id', async (req, res) => {
-    console.log(req.params.id)
-    const post = await Post.findById(req.params.id)
-    console.log(req.body)
-    res.render("post", {
-      post
-    })
-  });
-
-app.post('/post', async (req, res) => {
-    console.log(req.body)
-    await Post.create(req.body)
-    res.redirect('/')
-})
+app.get('/', postController.getMainPage)
+app.get('/index', postController.getMainPage)
+app.get('/post/:id', postController.getPostPage)
+app.post('/post', postController.createPost)
 
 // LISTEN
+
 app.listen(port, () => {
     console.log('Server started...')
 })
-
-
