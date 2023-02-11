@@ -6,13 +6,14 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
-const photoController = require("./controllers/photoControllers");
-const pageController = require("./controllers/pageController");
+const photoController = require('./controllers/photoControllers');
+const pageController = require('./controllers/pageController');
 
 const app = express();
 const port = 3000;
 
 //CONNECT DB
+
 mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017/pcat-test-db', {
   useNewUrlParser: true,
@@ -40,7 +41,7 @@ app.put('/photos/:id', photoController.updatePhoto);
 app.post('/photos', photoController.createPhoto);
 app.get('/photo/delete/:id', photoController.deletePhoto);
 
-app.get('/about', pageController.getAboutPage );
+app.get('/about', pageController.getAboutPage);
 app.get('/add', pageController.getAddPage);
 app.get('/photo/edit/:id', pageController.getEditPage);
 
